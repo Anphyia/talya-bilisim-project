@@ -167,6 +167,16 @@ body {
     min-height: 1.8rem;
 }
 
+.ampersand {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    min-height: 2.2rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
 .sub-title {
     font-size: 1.4rem;
     font-weight: 600;
@@ -488,13 +498,23 @@ body {
     }
     
     .main-title,
-    .sub-title {
-        font-size: 1.2rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
+.ampersand {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    min-height: 2.2rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.sub-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--time-green);
+    min-height: 1.8rem;
+}
     
     .projects-grid,
     .skills-grid {

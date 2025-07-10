@@ -266,13 +266,18 @@ function initParallaxEffect() {
 document.addEventListener('DOMContentLoaded', () => {
     // Start typewriter animations with delay
     setTimeout(() => {
-        const titleTypewriter = new TypeWriter('typewriter-title', 'COMPUTER ENGINEERING', 80);
+        const titleTypewriter = new TypeWriter('typewriter-title', 'COMPUTER ENGINEERING STUDENT', 80);
         titleTypewriter.start();
         
         setTimeout(() => {
-            const subtitleTypewriter = new TypeWriter('typewriter-subtitle', 'STUDENT & SOFTWARE DEVELOPER', 60);
-            subtitleTypewriter.start();
-        }, 1500);
+            const ampersandTypewriter = new TypeWriter('typewriter-ampersand', '&', 100);
+            ampersandTypewriter.start();
+            
+            setTimeout(() => {
+                const subtitleTypewriter = new TypeWriter('typewriter-subtitle', 'SOFTWARE DEVELOPER', 60);
+                subtitleTypewriter.start();
+            }, 800);
+        }, 2000);
     }, 1000);
     
     // Update time immediately and then every second
