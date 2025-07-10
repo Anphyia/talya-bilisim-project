@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome – Anıl Berkan Üzrek</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="time-vortex"></div>
+    
+    <header class="hero-section">
+        <div class="container">
+            <div class="welcome-banner">
+                <div class="welcome-sign">WELCOME TO MY PORTFOLIO</div>
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="main-name">ANIL BERKAN</h1>
+                    <h1 class="main-surname">ÜZREK</h1>
+                    <div class="title-section">
+                        <h2 class="main-title" id="typewriter-title"></h2>
+                        <h2 class="sub-title" id="typewriter-subtitle"></h2>
+                    </div>
+                    <div class="location-info">
+                        <span class="location-pin">📍</span>
+                        <span class="location-text">ANTALYA, TÜRKİYE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="repo-link-section">
+                <a href="https://github.com/Anphyia/talya-bilisim-project" target="_blank" class="repo-link">
+                    <span class="repo-icon">📂</span>
+                    <span class="repo-text">View Repository</span>
+                </a>
+            </div>
+            
+            <div class="summary-section">
+                <div class="summary-points">
+                    <div class="point">Fourth-year Computer Engineering student</div>
+                    <div class="point">Passionate about backend and frontend development</div>
+                    <div class="point">Experienced in .NET, ASP.NET Core, React, Next.js, and React Native</div>
+                    <div class="point gold">Currently interning at Talya Bilişim</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <h2 class="section-title">PROJECT HIGHLIGHTS</h2>
+                <div class="projects-grid">
+                    <div class="project-card backend-project">
+                        <div class="project-icon">🔧</div>
+                        <h3>Visa Consultancy App</h3>
+                        <div class="project-type">BACKEND DEVELOPMENT</div>
+                        <div class="project-description">
+                            Built with .NET 8 and Clean Architecture principles, streamlining visa consultation processes with robust backend services.
+                        </div>
+                        <div class="tech-list">
+                            <span class="tech">.NET 8</span>
+                            <span class="tech">Clean Architecture</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card frontend-project">
+                        <div class="project-icon">🎨</div>
+                        <h3>Hotel Booking App</h3>
+                        <div class="project-type">FRONTEND DEVELOPMENT</div>
+                        <div class="project-description">
+                            Modern hotel booking interface built with React and TypeScript, featuring responsive design and intuitive user experience.
+                        </div>
+                        <div class="tech-list">
+                            <span class="tech">React</span>
+                            <span class="tech">TypeScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section" id="skills">
+            <div class="container">
+                <h2 class="section-title">SKILLS & TECHNOLOGIES</h2>
+                <div class="skills-grid">
+                    <div class="skill-group">
+                        <h3 class="skill-category-title">FRONTEND</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">HTML</div>
+                            <div class="skill-item">CSS</div>
+                            <div class="skill-item">JavaScript</div>
+                            <div class="skill-item">Angular</div>
+                            <div class="skill-item">React</div>
+                            <div class="skill-item">Next.js</div>
+                            <div class="skill-item">TailwindCSS</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-category-title">BACKEND</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">.NET</div>
+                            <div class="skill-item">ASP.NET Core</div>
+                            <div class="skill-item">EF Core</div>
+                            <div class="skill-item">C#</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-category-title">TOOLS</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">Git</div>
+                            <div class="skill-item">GitHub Actions</div>
+                            <div class="skill-item">GitHub Pages</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-links">
+                    <a href="https://github.com/Anphyia" target="_blank" class="contact-link">
+                        <span class="link-icon">🔗</span>
+                        <span class="link-text">GITHUB</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/anil-berkan-uzrek/" target="_blank" class="contact-link">
+                        <span class="link-icon">💼</span>
+                        <span class="link-text">LINKEDIN</span>
+                    </a>
+                    <a href="mailto:anilberkanuzrek@hotmail.com" class="contact-link">
+                        <span class="link-icon">✉️</span>
+                        <span class="link-text">CONTACT</span>
+                    </a>
+                </div>
+                <div class="time-display">
+                    <span id="current-time"></span>
+                </div>
+            </div>
+            <div class="copyright">© <span id="current-year"></span> Anıl Berkan Üzrek. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
