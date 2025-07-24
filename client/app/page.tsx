@@ -97,22 +97,16 @@ export default function Home() {
 
         {/* Main Content */}
         <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-          {/* Hero Section */}
-          <div className="text-center mb-12 md:mb-16">
-            <h1 className="restaurant-text-foreground restaurant-font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
-              Discover Our Menu
-            </h1>
-          </div>
 
           {/* Loading State */}
           {isLoading && (
             <div>
               {/* Section header skeleton */}
-              <div className="mb-8">
-                <Skeleton className="h-8 md:h-10 w-48 md:w-64 mb-4 bg-gray-300" />
-                <Skeleton className="h-5 md:h-6 w-72 md:w-96 bg-gray-200" />
-              </div>
-              
+                <div className="mb-8 text-center">
+                <Skeleton className="h-8 md:h-10 w-48 md:w-64 mb-4 bg-gray-300 mx-auto" />
+                <Skeleton className="h-5 md:h-6 w-72 md:w-96 bg-gray-200 mx-auto" />
+                </div>
+
               {/* Category cards skeleton */}
               <CategorySkeletonGrid count={6} />
             </div>
@@ -121,7 +115,7 @@ export default function Home() {
           {/* Menu Categories */}
           {!isLoading && (
             <div>
-              <div className="mb-8">
+              <div className="mb-8 text-center">
                 <h2 className="restaurant-text-foreground restaurant-font-heading text-2xl md:text-3xl font-bold mb-4">
                   Menu Categories
                 </h2>
@@ -137,7 +131,6 @@ export default function Home() {
                     name={category.name}
                     image={category.image}
                     href={category.href}
-                    description={category.description}
                   />
                 ))}
               </div>

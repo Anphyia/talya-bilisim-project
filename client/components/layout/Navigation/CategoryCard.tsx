@@ -8,7 +8,6 @@ interface CategoryCardProps {
   name: string;
   image: string;
   href: string;
-  description?: string;
   className?: string;
 }
 
@@ -16,7 +15,6 @@ export function CategoryCard({
   name,
   image,
   href,
-  description,
   className = ''
 }: CategoryCardProps) {
   return (
@@ -28,7 +26,7 @@ export function CategoryCard({
         hover:scale-105 hover:shadow-lg
         focus:outline-none focus:ring-2 focus:ring-restaurant-primary focus:ring-opacity-50
       ">
-        <div className="aspect-[5/3] relative">
+        <div className="aspect-[3/2] relative">
           <Image
             src={image}
             alt={name}
@@ -47,30 +45,17 @@ export function CategoryCard({
 
           {/* Content */}
           <CardContent className="
-            absolute inset-0 flex flex-col justify-end p-4 md:p-6
+            absolute inset-0 flex items-center justify-center p-4 md:p-6
           ">
             <h3 className="
               text-white restaurant-font-heading
-              text-lg md:text-xl lg:text-2xl font-bold
-              mb-1 md:mb-2
+              text-2xl min-[425px]:text-3xl md:text-3xl lg:text-4xl font-bold
+              text-center
               transition-transform duration-300
               group-hover:translate-y-[-2px]
             ">
               {name}
             </h3>
-            
-            {description && (
-              <p className="
-                text-white text-opacity-90
-                text-sm md:text-base
-                restaurant-font-body
-                line-clamp-2
-                transition-opacity duration-300
-                group-hover:text-opacity-100
-              ">
-                {description}
-              </p>
-            )}
           </CardContent>
 
           {/* Hover indicator */}
