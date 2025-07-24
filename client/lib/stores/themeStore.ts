@@ -11,8 +11,10 @@ interface ThemeState {
   setBranding: (branding: Partial<RestaurantBranding>) => void;
   updateThemeColors: (colors: Partial<RestaurantTheme['colors']>) => void;
   updateThemeLayout: (layout: Partial<RestaurantTheme['layout']>) => void;
+  updateSingleColor: (colorKey: keyof RestaurantTheme['colors'], color: string) => void;
   toggleCustomizing: () => void;
   resetTheme: () => void;
+  applyThemeToDOM: () => void;
 }
 
 const defaultBranding: RestaurantBranding = {
@@ -27,7 +29,7 @@ const defaultBranding: RestaurantBranding = {
 
 export const useThemeStore = create<ThemeState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       currentTheme: defaultRestaurantTheme,
       branding: defaultBranding,
       isCustomizing: false,
@@ -55,10 +57,26 @@ export const useThemeStore = create<ThemeState>()(
           },
         })),
 
+      updateSingleColor: (colorKey, color) =>
+        set((state) => {
+          const newTheme = {
+            ...state.currentTheme,
+            colors: { ...state.currentTheme.colors, [colorKey]: color },
+          };
+          // Apply to DOM immediately
+          themeManager.applyTheme(newTheme);
+          return { currentTheme: newTheme };
+        }),
+
       toggleCustomizing: () =>
         set((state) => ({ isCustomizing: !state.isCustomizing })),
 
       resetTheme: () => set({ currentTheme: defaultRestaurantTheme }),
+
+      applyThemeToDOM: () => {
+        const { currentTheme } = get();
+        themeManager.applyTheme(currentTheme);
+      },
     }),
     {
       name: 'restaurant-theme',
@@ -70,9 +88,10 @@ export const useThemeStore = create<ThemeState>()(
   )
 );
 
-// Singleton Theme Manager for CSS variable updates
+// Enhanced Theme Manager for dynamic CSS updates
 class ThemeManager {
   private static instance: ThemeManager;
+  private styleElement: HTMLStyleElement | null = null;
 
   static getInstance(): ThemeManager {
     if (!ThemeManager.instance) {
@@ -81,11 +100,22 @@ class ThemeManager {
     return ThemeManager.instance;
   }
 
+  private ensureStyleElement(): void {
+    if (typeof document === 'undefined') return;
+
+    if (!this.styleElement) {
+      this.styleElement = document.createElement('style');
+      this.styleElement.id = 'restaurant-theme-variables';
+      document.head.appendChild(this.styleElement);
+    }
+  }
+
   applyTheme(theme: RestaurantTheme): void {
     if (typeof document === 'undefined') return;
 
+    // Apply via CSS variables for immediate effect
     const root = document.documentElement;
-    
+
     // Apply color variables
     root.style.setProperty('--restaurant-primary', theme.colors.primary);
     root.style.setProperty('--restaurant-secondary', theme.colors.secondary);
@@ -109,6 +139,12 @@ class ThemeManager {
     root.style.setProperty('--restaurant-radius-md', theme.borderRadius.md);
     root.style.setProperty('--restaurant-radius-lg', theme.borderRadius.lg);
     root.style.setProperty('--restaurant-radius-xl', theme.borderRadius.xl);
+
+    // Also inject CSS for persistence
+    this.ensureStyleElement();
+    if (this.styleElement) {
+      this.styleElement.textContent = this.generateThemeCSS(theme);
+    }
   }
 
   generateThemeCSS(theme: RestaurantTheme): string {

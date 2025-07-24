@@ -4,8 +4,8 @@ export const defaultRestaurantTheme: RestaurantTheme = {
   id: 'default',
   name: 'Default Restaurant Theme',
   colors: {
-    primary: '#b2d98b', // Pistachio green
-    secondary: '#1d665d', // Eucalyptus green
+    primary: '#1d665d', // Eucalyptus green
+    secondary: '#b2d98b', // Pistachio green
     accent: '#FF4D50',
     background: '#fbfaf2', // Frost white
     foreground: '#061611', // Black Glaze
