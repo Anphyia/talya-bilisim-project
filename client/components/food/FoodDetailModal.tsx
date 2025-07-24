@@ -47,7 +47,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto restaurant-bg-background">
         <DialogHeader>
           <DialogTitle className="restaurant-text-foreground restaurant-font-heading text-xl font-bold">
             {food.name}
