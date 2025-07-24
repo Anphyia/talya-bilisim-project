@@ -4,13 +4,13 @@ export const defaultRestaurantTheme: RestaurantTheme = {
   id: 'default',
   name: 'Default Restaurant Theme',
   colors: {
-    primary: '#059669', // Green
-    secondary: '#065f46', // Dark green
-    accent: '#FF4D50', // Red
-    background: 'oklch(95.08% 0.0481 184.07)', // Light background
-    foreground: '#1f2937', // Dark text for main content
-    muted: '#6b7280', // Gray
-    border: '#e5e7eb', // Light gray border
+    primary: '#b2d98b', // Pistachio green
+    secondary: '#1d665d', // Eucalyptus green
+    accent: '#FF4D50',
+    background: '#fbfaf2', // Frost white
+    foreground: '#061611', // Black Glaze
+    muted: '#6b7280',
+    border: '#e5e7eb',
   },
   layout: {
     headerPosition: 'top',
@@ -61,40 +61,40 @@ export const defaultRestaurantTheme: RestaurantTheme = {
   },
 };
 
-export const lightRestaurantTheme: RestaurantTheme = {
+export const goldenRestaurantTheme: RestaurantTheme = {
   ...defaultRestaurantTheme,
-  id: 'light',
-  name: 'Light Restaurant Theme',
+  id: 'golden',
+  name: 'Golden Restaurant Theme',
   colors: {
-    primary: '#059669',
-    secondary: '#065f46',
-    accent: '#FF4D50',
-    background: '#ffffff',
-    foreground: '#1f2937',
-    muted: '#6b7280',
-    border: '#e5e7eb',
-  },
-};
-
-export const premiumRestaurantTheme: RestaurantTheme = {
-  ...defaultRestaurantTheme,
-  id: 'premium',
-  name: 'Premium Restaurant Theme',
-  colors: {
-    primary: '#d4af37', // Gold
-    secondary: '#b8860b', // Dark gold
-    accent: '#8b0000', // Dark red
-    background: '#0f172a',
-    foreground: '#f8fafc',
+    primary: '#fbba00', // Selective yellow
+    secondary: '#e5781e', // Vivid Tangelo
+    accent: '#5a3d2b', // Royal brown
+    background: '#f4eed8', // Eggshell white
+    foreground: '#171717', // Charcoal Gray
     muted: '#64748b',
     border: '#334155',
   },
 };
 
+export const oceanRestaurantTheme: RestaurantTheme = {
+  ...defaultRestaurantTheme,
+  id: 'ocean',
+  name: 'Ocean Restaurant Theme',
+  colors: {
+    primary: '#0077b6', // Deep Sky Blue
+    secondary: '#00b4d8', // Turquoise Blue
+    accent: '#90e0ef', // Light Cyan
+    background: '#caf0f8', // Alice Blue
+    foreground: '#03045e', // Navy Blue
+    muted: '#6c757d', // Muted Gray
+    border: '#ade8f4', // Light Blue Border
+  },
+};
+
 export const availableThemes = [
   defaultRestaurantTheme,
-  lightRestaurantTheme,
-  premiumRestaurantTheme,
+  goldenRestaurantTheme,
+  oceanRestaurantTheme,
 ];
 
 export const getThemeById = (id: string): RestaurantTheme => {
