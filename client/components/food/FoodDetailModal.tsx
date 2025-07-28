@@ -12,6 +12,8 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { Separator } from '../ui/separator';
+import { useCartStore } from '@/lib/stores/cartStore';
+import { Minus, Plus } from 'lucide-react';
 
 interface Food {
   id: string;
@@ -33,6 +35,7 @@ interface FoodDetailModalProps {
 export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps) {
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState('');
+  const { addItem } = useCartStore();
 
   if (!food) return null;
 
@@ -126,7 +129,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
                 disabled={quantity <= 1}
                 className="w-8 h-8 p-0 restaurant-border hover:restaurant-bg-primary/10"
               >
-                −
+                <Minus className="h-3 w-3" />
               </Button>
               <span className="restaurant-text-foreground restaurant-font-heading text-lg font-semibold min-w-[1.5rem] text-center">
                 {quantity}
@@ -138,7 +141,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
                 disabled={quantity >= 10}
                 className="w-8 h-8 p-0 restaurant-border hover:restaurant-bg-primary/10"
               >
-                +
+                <Plus className="h-3 w-3" />
               </Button>
             </div>
           </div>
@@ -149,8 +152,8 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
         <div className="pt-4">
           <Button
             onClick={() => {
-              // Add to cart logic here
-              console.log(`Added ${quantity} x ${food.name} to cart with notes: ${notes}`);
+              // Add to cart using Zustand store
+              addItem(food, quantity, notes);
               onClose();
               // Reset form
               setQuantity(1);

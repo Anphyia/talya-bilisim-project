@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Instagram, Globe } from 'lucide-react';
 import { useThemeStore } from '@/lib/stores/themeStore';
 import { Button } from '@/components/ui/button';
+import { CartIcon } from '@/components/cart/CartIcon';
 
 interface HeaderActionsProps {
   position: 'left' | 'right' | 'mobile';
@@ -89,16 +90,14 @@ export function HeaderActions({ position }: HeaderActionsProps) {
     );
   }
 
-  // Don't render if no social links
-  if (socialIcons.length === 0) {
-    return null;
-  }
+  const cartIconSize = position === 'mobile' ? 'sm' : 'md';
 
   return (
     <div className={`
       flex items-center
       ${position === 'mobile' ? 'space-x-1' : 'space-x-2'}
     `}>
+      <CartIcon size={cartIconSize} />
       {socialIcons}
     </div>
   );

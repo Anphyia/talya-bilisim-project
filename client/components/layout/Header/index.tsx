@@ -10,7 +10,8 @@ interface HeaderProps {
 
 export function Header({ className = '' }: HeaderProps) {
   const { currentTheme, branding } = useThemeStore();
-  const { logoPosition } = currentTheme.layout;
+  const layout = currentTheme.layout ?? {};
+  const { logoPosition = 'left' } = layout;
 
   const logoPositionClasses = {
     left: 'justify-start',
@@ -19,7 +20,7 @@ export function Header({ className = '' }: HeaderProps) {
   };
 
   return (
-    <header 
+    <header
       className={`
         sticky top-0 z-50 w-full
         restaurant-bg-primary
@@ -45,7 +46,7 @@ export function Header({ className = '' }: HeaderProps) {
             ${logoPositionClasses[logoPosition]}
             ${logoPosition === 'center' ? 'flex-1' : ''}
           `}>
-            <Logo 
+            <Logo
               name={branding.name}
               logo={branding.logo}
               className="h-8 md:h-10"
