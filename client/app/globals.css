@@ -96,6 +96,9 @@
   .restaurant-bg-background {
     background-color: var(--restaurant-background);
   }
+  .restaurant-bg-foreground {
+    background-color: var(--restaurant-foreground);
+  }
   
   .restaurant-text-primary {
     color: var(--restaurant-primary);
