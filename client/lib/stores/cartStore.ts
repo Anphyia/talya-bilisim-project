@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { toast } from 'sonner';
 import { persist } from 'zustand/middleware';
 
 interface Food {
@@ -23,9 +24,8 @@ interface CartItem {
 interface CartState {
   items: CartItem[];
   orderNotes: string;
-  isDrawerOpen: boolean;
   isCartOpen: boolean;
-  
+
   // Cart actions
   addItem: (food: Food, quantity: number, notes?: string) => void;
   removeItem: (itemId: string) => void;
@@ -33,15 +33,12 @@ interface CartState {
   updateProductNotes: (itemId: string, notes: string) => void;
   updateOrderNotes: (notes: string) => void;
   clearCart: () => void;
-  
+
   // UI state management
-  toggleDrawer: () => void;
-  openDrawer: () => void;
-  closeDrawer: () => void;
   toggleCart: () => void;
   openCart: () => void;
   closeCart: () => void;
-  
+
   // Helper functions
   getItemById: (itemId: string) => CartItem | undefined;
   generateItemId: (food: Food, notes: string) => string;
@@ -65,24 +62,23 @@ export const useCartStore = create<CartState & CartSelectors>()(
     (set, get) => ({
       items: [],
       orderNotes: '',
-      isDrawerOpen: false,
       isCartOpen: false,
 
       // Cart Actions
       addItem: (food, quantity, notes = '') => {
         const itemId = generateCartItemId(food, notes);
         const existingItem = get().items.find(item => item.id === itemId);
-        
+
         set((state) => {
           if (existingItem) {
             // Update existing item quantity
+            toast.success(`${food.name} (x${quantity}) added to cart!`, { position: "top-center" });
             return {
               items: state.items.map(item =>
                 item.id === itemId
                   ? { ...item, quantity: item.quantity + quantity }
                   : item
               ),
-              isDrawerOpen: true, // Auto-open drawer when adding items
             };
           } else {
             // Add new item
@@ -93,9 +89,9 @@ export const useCartStore = create<CartState & CartSelectors>()(
               productNotes: notes.trim(),
               addedAt: new Date(),
             };
+            toast.success(`${food.name} (x${quantity}) added to cart!`, { position: "top-center" });
             return {
               items: [...state.items, newItem],
-              isDrawerOpen: true, // Auto-open drawer when adding items
             };
           }
         });
@@ -112,7 +108,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
           get().removeItem(itemId);
           return;
         }
-        
+
         set((state) => ({
           items: state.items.map(item =>
             item.id === itemId
@@ -140,30 +136,16 @@ export const useCartStore = create<CartState & CartSelectors>()(
         set({
           items: [],
           orderNotes: '',
-          isDrawerOpen: false,
-          isCartOpen: false,
         });
       },
 
       // UI State Management
-      toggleDrawer: () => {
-        set((state) => ({ isDrawerOpen: !state.isDrawerOpen }));
-      },
-
-      openDrawer: () => {
-        set({ isDrawerOpen: true });
-      },
-
-      closeDrawer: () => {
-        set({ isDrawerOpen: false });
-      },
-
       toggleCart: () => {
         set((state) => ({ isCartOpen: !state.isCartOpen }));
       },
 
       openCart: () => {
-        set({ isCartOpen: true, isDrawerOpen: false }); // Close drawer when opening cart
+        set({ isCartOpen: true });
       },
 
       closeCart: () => {
@@ -201,15 +183,3 @@ export const useCartStore = create<CartState & CartSelectors>()(
     }
   )
 );
-
-// Auto-close drawer after 4 seconds when opened
-let drawerTimeout: NodeJS.Timeout;
-
-useCartStore.subscribe((state) => {
-  if (state.isDrawerOpen) {
-    clearTimeout(drawerTimeout);
-    drawerTimeout = setTimeout(() => {
-      useCartStore.getState().closeDrawer();
-    }, 4000);
-  }
-});
