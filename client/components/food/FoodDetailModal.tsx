@@ -127,7 +127,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
                 size="sm"
                 onClick={() => handleQuantityChange(-1)}
                 disabled={quantity <= 1}
-                className="w-8 h-8 p-0 restaurant-border hover:restaurant-bg-primary/10"
+                className="w-8 h-8 p-0 restaurant-border restaurant-bg-secondary hover:restaurant-bg-primary/10"
               >
                 <Minus className="h-3 w-3" />
               </Button>
@@ -139,7 +139,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
                 size="sm"
                 onClick={() => handleQuantityChange(1)}
                 disabled={quantity >= 10}
-                className="w-8 h-8 p-0 restaurant-border hover:restaurant-bg-primary/10"
+                className="w-8 h-8 p-0 restaurant-border restaurant-bg-secondary hover:restaurant-bg-primary/10"
               >
                 <Plus className="h-3 w-3" />
               </Button>
