@@ -20,6 +20,13 @@
   --chart-5: #FACC00;
   --chart-active-dot: #000;
 
+   --restaurant-primary: var(--main);
+  --restaurant-secondary: var(--secondary-background);
+  --restaurant-background: var(--background);
+  --restaurant-foreground: var(--foreground);
+  --restaurant-border: var(--border);
+  --restaurant-accent: var(--main);
+  --restaurant-muted: oklch(60% 0.02 180);
 }
 
 .dark {
@@ -37,6 +44,14 @@
   --chart-4: #FF6669;
   --chart-5: #E0B700;
   --chart-active-dot: #fff;
+
+    --restaurant-primary: var(--main);
+  --restaurant-secondary: var(--secondary-background);
+  --restaurant-background: var(--background);
+  --restaurant-foreground: var(--foreground);
+  --restaurant-border: var(--border);
+  --restaurant-accent: var(--main);
+  --restaurant-muted: oklch(40% 0.02 180);
 }
 
 @theme inline {
