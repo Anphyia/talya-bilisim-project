@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { RestaurantTheme, RestaurantBranding } from '../theme/types';
+import { RestaurantTheme, RestaurantBranding } from '../../types/theme-types';
 import { defaultRestaurantTheme } from '../theme/presets';
 
 interface ThemeState {

@@ -1,4 +1,4 @@
-import { RestaurantTheme } from './types';
+import { RestaurantTheme } from '../../types/theme-types';
 
 export const defaultRestaurantTheme: RestaurantTheme = {
   id: 'default',
