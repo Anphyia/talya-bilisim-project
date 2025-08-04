@@ -156,7 +156,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           {/* Subcategory Sections */}
-          <div className="space-y-16">
+          <div className="space-y-1">
             {subcategoriesArray.map((subcategory, index) => (
               <CategorySection
                 key={subcategory.id}

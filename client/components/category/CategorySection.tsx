@@ -21,7 +21,7 @@ export function CategorySection({ subcategory, onFoodClick, className = '' }: Ca
       className={`scroll-mt-[158px] ${className}`}
       aria-labelledby={`heading-${subcategory.id}`}
     >
-      <div className="space-y-6">
+      <div className="space-y-1">
         {/* Section Header */}
         <div className="text-left">
           <h2
