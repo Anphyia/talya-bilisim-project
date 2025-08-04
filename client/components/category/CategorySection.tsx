@@ -21,7 +21,7 @@ export function CategorySection({ subcategory, onFoodClick, className = '' }: Ca
       className={`scroll-mt-[158px] ${className}`}
       aria-labelledby={`heading-${subcategory.id}`}
     >
-      <div className="space-y-1">
+      <div className="space-y-2">
         {/* Section Header */}
         <div className="text-left">
           <h2
@@ -43,7 +43,7 @@ export function CategorySection({ subcategory, onFoodClick, className = '' }: Ca
           ))}
         </div>
 
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center py-2 md:py-4 lg:py-8">
           <Separator className="w-24 restaurant-bg-border" />
         </div>
       </div>
