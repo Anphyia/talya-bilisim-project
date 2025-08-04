@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface SubcategoryNavigationProps {
     subcategories: Array<{ id: string; name: string }>;
@@ -11,6 +11,15 @@ interface SubcategoryNavigationProps {
 
 export function SubcategoryNavigation({ subcategories, className = '' }: SubcategoryNavigationProps) {
     const [activeSubcategory, setActiveSubcategory] = useState<string>('');
+
+    useEffect(() => {
+        if (activeSubcategory) {
+            const activeButton = document.querySelector(`[data-subcategory="${activeSubcategory}"]`) as HTMLElement;
+            if (activeButton) {
+                activeButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+    }, [activeSubcategory]);
 
     useEffect(() => {
         const observerOptions = {
@@ -88,17 +97,18 @@ export function SubcategoryNavigation({ subcategories, className = '' }: Subcate
     return (
         <div className={`sticky top-[73px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 ${className}`}>
             <div className={`container mx-auto ${activeSubcategory === subcategories[0]?.id ? 'px-1 md:px-2 lg:px-4' : 'px-0 md:px-1 lg:px-3'} pb-3`}>
-                <ScrollArea className="w-full whitespace-nowrap">
-                    <div className="flex space-x-2 m-4">
+                <ScrollArea className="w-full">
+                    <div className="flex space-x-2 m-4 mr-6 min-w-max">
                         {subcategories.map((subcategory) => (
                             <Button
                                 key={subcategory.id}
+                                data-subcategory={subcategory.id}
                                 variant={activeSubcategory === subcategory.id ? "default" : "outline"}
                                 size="sm"
                                 onClick={() => scrollToSection(subcategory.id)}
                                 onKeyDown={(e) => handleKeyDown(e, subcategory.id)}
                                 className={`
-  flex-shrink-0 transition-all duration-200 restaurant-font-body
+  flex-shrink-0 transition-all duration-200 restaurant-font-body whitespace-nowrap
   ${activeSubcategory === subcategory.id
                                         ? 'restaurant-bg-primary restaurant-text-primary-foreground shadow-sm scale-[1.2]'
                                         : 'restaurant-bg-background restaurant-text-foreground hover:restaurant-bg-muted'
@@ -112,6 +122,7 @@ export function SubcategoryNavigation({ subcategories, className = '' }: Subcate
                             </Button>
                         ))}
                     </div>
+                    <ScrollBar orientation="horizontal" />
                 </ScrollArea>
             </div>
         </div>
