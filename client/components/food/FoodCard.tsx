@@ -74,7 +74,7 @@ export function FoodCard({ food, onClick, className = '' }: FoodCardProps) {
 
           <Button
             onClick={onClick}
-            className="w-full restaurant-bg-primary hover:restaurant-bg-primary/90 text-white restaurant-rounded-md transition-colors duration-300"
+            className="w-full restaurant-bg-primary restaurant-text-background hover:restaurant-bg-primary/90 transition-colors duration-300 restaurant-rounded-md"
           >
             View Details
           </Button>

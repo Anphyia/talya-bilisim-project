@@ -12,6 +12,7 @@ import { mockFoodData, Food } from '@/lib/data/mockData';
 import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface CategoryPageProps {
   params: Promise<{
@@ -175,12 +176,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             <p className="restaurant-text-muted restaurant-font-body text-lg mb-6 max-w-2xl mx-auto">
               Discover more delicious options from our other menu categories.
             </p>
-            <Link
-              href="/"
-              className="inline-flex items-center px-6 py-3 restaurant-bg-primary restaurant-text-primary-foreground restaurant-rounded-md hover:restaurant-bg-primary/90 transition-colors duration-200 restaurant-font-body font-medium"
+            <Button
+              asChild
+              size="lg"
+              className="inline-flex items-center px-6 py-3 restaurant-bg-primary restaurant-text-background restaurant-rounded-md hover:restaurant-bg-primary/90 transition-colors duration-200 restaurant-font-body font-medium"
             >
+              <Link href="/">
               Browse All Categories
-            </Link>
+              </Link>
+            </Button>
           </div>
         </main>
 

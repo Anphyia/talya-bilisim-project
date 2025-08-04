@@ -127,6 +127,10 @@
     color: var(--restaurant-accent);
   }
   
+  .restaurant-text-background {
+    color: var(--restaurant-background);
+  }
+  
   .restaurant-text-foreground {
     color: var(--restaurant-foreground);
   }
