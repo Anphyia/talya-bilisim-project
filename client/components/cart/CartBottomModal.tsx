@@ -14,7 +14,7 @@ const CartBottomModal = () => {
       <span className="text-lg font-medium">
         {totalItems} item{totalItems > 1 ? "s" : ""} in cart
       </span>
-      <Button onClick={openCart}>View Cart</Button>
+      <Button className="restaurant-bg-secondary" onClick={openCart}>View Cart</Button>
     </div>
   );
 };
