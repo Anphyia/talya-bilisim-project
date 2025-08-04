@@ -95,7 +95,7 @@ export function SubcategoryNavigation({ subcategories, className = '' }: Subcate
     };
 
     return (
-        <div className={`sticky top-[65px] md:top-[81px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 ${className}`}>
+        <div className={`sticky top-[65px] md:top-[81px] z-30 bg-white/50  backdrop-blur-sm border-b border-gray-100 ${className}`}>
             <div className={`container mx-auto ${activeSubcategory === subcategories[0]?.id ? 'px-1 md:px-2 lg:px-4' : 'px-0  md:px-1 lg:px-3'} pb-3`}>
                 <ScrollArea className="w-full">
                     <div className="flex space-x-2 m-4 mr-6 min-w-max">
