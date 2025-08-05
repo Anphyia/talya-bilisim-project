@@ -82,3 +82,34 @@ export type ProcessedRestaurant = {
     hideEndTimes: boolean;
   };
 };
+
+// Basket menu types
+export type ProcessedBasketMenu = {
+  id: number;
+  name: string;
+  displayOrder: number;
+  photoUrl: string;
+  saleStartHour: string;
+  saleEndHour: string;
+  useDepartmentProducts: boolean;
+  departmentIds: number[];
+};
+
+export type ProcessedBasketMenuDetail = {
+  id: number;
+  menuId: number;
+  productGroupId: number;
+  productId: number;
+  displayOrder?: number;
+};
+
+// Enhanced category data structure for basket menu navigation
+export type BasketMenuCategory = {
+  id: number;
+  name: string;
+  slug: string;
+  photoUrl: string;
+  displayOrder: number;
+  menuGroups: ProcessedMenuGroup[];
+  menuGroupIds: number[];
+};

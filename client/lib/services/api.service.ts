@@ -6,13 +6,13 @@ class ApiService {
   private defaultHeaders: Record<string, string>;
 
   constructor() {
-    this.baseUrl = process.env.API_URL || '';
+    this.baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
 
     if (!this.baseUrl) {
-      console.warn('API_URL environment variable is not set');
+      console.warn('NEXT_PUBLIC_API_URL environment variable is not set');
     }
   }
 
