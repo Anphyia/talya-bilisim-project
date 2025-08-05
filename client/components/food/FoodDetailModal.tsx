@@ -78,7 +78,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
           {/* Price and Category */}
           <div className="flex items-center justify-between">
             <span className="restaurant-text-primary restaurant-font-heading text-2xl font-bold">
-              ${food.price.toFixed(2)}
+              ₺{food.price.toFixed(2)}
             </span>
             <Badge
               variant="secondary"
@@ -161,7 +161,7 @@ export function FoodDetailModal({ food, isOpen, onClose }: FoodDetailModalProps)
             }}
             className="w-full restaurant-bg-primary hover:restaurant-bg-primary/90 text-white font-semibold py-3"
           >
-            Add to Cart - ${totalPrice}
+            Add to Cart - ₺{totalPrice}
           </Button>
 
           <Separator className="my-4" />

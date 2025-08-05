@@ -49,7 +49,7 @@ export function FoodCard({ food, onClick, className = '' }: FoodCardProps) {
               {food.name}
             </h3>
             <span className="restaurant-text-primary restaurant-font-heading text-lg md:text-xl font-bold ml-2">
-              ${food.price.toFixed(2)}
+              ₺{food.price.toFixed(2)}
             </span>
           </div>
 
