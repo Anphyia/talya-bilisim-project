@@ -55,9 +55,7 @@ export function CartSheet() {
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
-  const subtotal = totalPrice;
-  const tax = subtotal * 0.08; // 8% tax rate
-  const finalTotal = subtotal + tax;
+
 
   const handleQuantityChange = (itemId: string, change: number) => {
     const item = items.find(i => i.id === itemId);
@@ -169,7 +167,7 @@ export function CartSheet() {
                           {item.food.name}
                         </h4>
                         <p className="restaurant-text-primary restaurant-font-heading text-sm font-bold">
-                          ${item.food.price.toFixed(2)} each
+                          ₺{item.food.price.toFixed(2)} each
                         </p>
                       </div>
 
@@ -212,7 +210,7 @@ export function CartSheet() {
                       </div>
 
                       <span className="restaurant-text-primary restaurant-font-heading text-sm font-bold">
-                        ${(item.food.price * item.quantity).toFixed(2)}
+                        ₺{(item.food.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
 
@@ -303,28 +301,10 @@ export function CartSheet() {
             <Separator className="restaurant-border" />
 
             {/* Order Summary */}
-            <div className="space-y-3">
-              <h4 className="restaurant-text-foreground restaurant-font-heading text-base font-semibold">
-                Order Summary
-              </h4>
-
-              <div className="space-y-2 restaurant-font-body text-sm">
-                <div className="flex justify-between restaurant-text-foreground">
-                  <span>Subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
-                </div>
-
-                <div className="flex justify-between restaurant-text-foreground">
-                  <span>Tax (8%):</span>
-                  <span>${tax.toFixed(2)}</span>
-                </div>
-
-                <Separator className="restaurant-border" />
-
-                <div className="flex justify-between restaurant-text-foreground restaurant-font-heading text-base font-bold">
-                  <span>Total:</span>
-                  <span className="restaurant-text-primary">${finalTotal.toFixed(2)}</span>
-                </div>
+            <div className="space-y-2 restaurant-font-body text-sm">
+              <div className="flex justify-between restaurant-text-foreground restaurant-font-heading text-base font-bold">
+                <span>Total:</span>
+                <span className="restaurant-text-primary">₺{totalPrice.toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -336,7 +316,7 @@ export function CartSheet() {
             className="w-full restaurant-bg-primary hover:restaurant-bg-primary/90 text-white restaurant-font-heading font-semibold py-3"
             size="lg"
           >
-            Proceed to Checkout - ${finalTotal.toFixed(2)}
+            Proceed to Checkout - ₺{totalPrice.toFixed(2)}
           </Button>
 
           <div className="flex space-x-3">
