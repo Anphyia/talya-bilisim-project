@@ -19,7 +19,7 @@ export function HeaderActions({ position }: HeaderActionsProps) {
 
   const socialIcons = [];
 
-  if (socialLinks.instagram) {
+  if (socialLinks.telephone) {
     socialIcons.push(
       <Button
         key="phone"
@@ -29,7 +29,7 @@ export function HeaderActions({ position }: HeaderActionsProps) {
         className="restaurant-text-foreground hover:restaurant-bg-secondary p-2 h-auto"
       >
         <Link
-          href={socialLinks.instagram}
+          href={socialLinks.telephone}
           aria-label="Call us"
         >
           <Phone size={iconSize} />

@@ -70,7 +70,7 @@ export interface RestaurantBranding {
   logo?: string;
   description?: string;
   socialLinks: {
-    instagram?: string;
+    telephone?: string;
     website?: string;
     facebook?: string;
   };
