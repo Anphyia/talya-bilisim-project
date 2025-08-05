@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { RestaurantTheme, RestaurantBranding } from '../../types/theme-types';
-import { defaultRestaurantTheme } from '../theme/presets';
+import { defaultRestaurantTheme, getThemeById, availableThemes } from '../theme/presets';
 
 interface ThemeState {
   currentTheme: RestaurantTheme;
@@ -15,6 +15,8 @@ interface ThemeState {
   toggleCustomizing: () => void;
   resetTheme: () => void;
   applyThemeToDOM: () => void;
+  switchToPreset: (themeId: string) => void;
+  getAvailableThemes: () => RestaurantTheme[];
 }
 
 const defaultBranding: RestaurantBranding = {
@@ -77,6 +79,14 @@ export const useThemeStore = create<ThemeState>()(
         const { currentTheme } = get();
         themeManager.applyTheme(currentTheme);
       },
+
+      switchToPreset: (themeId) => {
+        const theme = getThemeById(themeId);
+        set({ currentTheme: theme });
+        themeManager.applyTheme(theme);
+      },
+
+      getAvailableThemes: () => availableThemes,
     }),
     {
       name: 'restaurant-theme',

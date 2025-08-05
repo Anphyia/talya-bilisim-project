@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
+import ThemeSelector from "@/components/ThemeSelector";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,7 +69,9 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="min-h-full">
             {children}
-<Footer />
+            <ThemeSelector />
+
+            <Footer />
             <CartProvider />
           </div>
         </ThemeProvider>
