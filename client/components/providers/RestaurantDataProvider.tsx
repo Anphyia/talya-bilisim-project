@@ -25,6 +25,7 @@ export function RestaurantDataProvider({ children, restaurantData }: RestaurantD
             // Update theme store with real restaurant data
             setBranding({
                 name: restaurantData.name,
+                departmentname: restaurantData.departmentname,
                 logo: restaurantData.logo,
                 description: `Delicious food from ${restaurantData.name}`,
                 socialLinks: {

@@ -26,7 +26,7 @@ export function Header({ className = '' }: HeaderProps) {
           {/* Mobile Layout */}
           <div className="flex sm:hidden items-center flex-1">
             <Logo
-              name={branding.name}
+              name={branding.departmentname}
               logo={branding.logo}
               className="h-8"
             />
@@ -36,7 +36,6 @@ export function Header({ className = '' }: HeaderProps) {
           </div>
 
           {/* Desktop Layout */}
-          {/* Left side - Empty space for layout balance */}
           <div className="hidden sm:flex flex-1">
             {/* Keep empty for logo positioning */}
           </div>
@@ -44,7 +43,7 @@ export function Header({ className = '' }: HeaderProps) {
           {/* Center - Logo */}
           <div className="hidden sm:flex items-center justify-center flex-1">
             <Logo
-              name={branding.name}
+              name={branding.departmentname}
               logo={branding.logo}
               className="h-8 md:h-10"
             />

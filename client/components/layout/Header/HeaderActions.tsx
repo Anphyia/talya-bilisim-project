@@ -92,7 +92,7 @@ export function HeaderActions({ position }: HeaderActionsProps) {
 
   return (
     <div className={`
-      flex items-center
+      flex items-center gap-2
       ${position === 'mobile' ? 'space-x-1' : 'space-x-2'}
     `}>
       <CartIcon size={cartIconSize} />

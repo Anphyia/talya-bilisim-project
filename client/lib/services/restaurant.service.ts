@@ -56,6 +56,7 @@ class RestaurantService {
         const processedData: ProcessedRestaurant = {
             id: hotel.ID,
             name: hotel.NAME,
+            departmentname: hotel.DEPARTMENTNAME,
             logo: hotel.LOGO,
             phone: hotel.PHONE,
             address: hotel.ADDRESS || undefined,

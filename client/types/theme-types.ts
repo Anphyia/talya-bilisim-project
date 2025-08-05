@@ -67,6 +67,7 @@ export interface RestaurantTheme {
 
 export interface RestaurantBranding {
   name: string;
+  departmentname: string;
   logo?: string;
   description?: string;
   socialLinks: {

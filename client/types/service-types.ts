@@ -66,6 +66,7 @@ export type ProcessedTable = {
 export type ProcessedRestaurant = {
   id: number;
   name: string;
+  departmentname: string;
   logo: string;
   phone: string;
   address?: string;
