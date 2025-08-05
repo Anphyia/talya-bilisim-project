@@ -24,6 +24,7 @@ interface CartItem {
 interface CartState {
   items: CartItem[];
   orderNotes: string;
+  tableNumber: string | null;
   isCartOpen: boolean;
 
   // Cart actions
@@ -32,6 +33,7 @@ interface CartState {
   updateQuantity: (itemId: string, quantity: number) => void;
   updateProductNotes: (itemId: string, notes: string) => void;
   updateOrderNotes: (notes: string) => void;
+  setTableNumber: (tableNumber: string) => void;
   clearCart: () => void;
 
   // UI state management
@@ -62,6 +64,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
     (set, get) => ({
       items: [],
       orderNotes: '',
+      tableNumber: null,
       isCartOpen: false,
 
       // Cart Actions
@@ -132,10 +135,16 @@ export const useCartStore = create<CartState & CartSelectors>()(
         set({ orderNotes: notes.trim() });
       },
 
+      setTableNumber: (tableNumber) => {
+        set({ tableNumber });
+        toast.success(`Table ${tableNumber} selected!`, { position: "top-center" });
+      },
+
       clearCart: () => {
         set({
           items: [],
           orderNotes: '',
+          tableNumber: null,
         });
       },
 
@@ -179,6 +188,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
       partialize: (state) => ({
         items: state.items,
         orderNotes: state.orderNotes,
+        tableNumber: state.tableNumber,
       }),
     }
   )

@@ -24,8 +24,11 @@ import {
   Edit3,
   Check,
   X,
-  ShoppingCart
+  ShoppingCart,
+  QrCode,
+  MapPin
 } from 'lucide-react';
+import { QRScanner } from './QRScanner';
 
 export function CartSheet() {
   const {
@@ -33,9 +36,11 @@ export function CartSheet() {
     closeCart,
     items,
     orderNotes,
+    tableNumber,
     updateQuantity,
     updateProductNotes,
     updateOrderNotes,
+    setTableNumber,
     removeItem,
     clearCart,
     getTotalItems,
@@ -45,6 +50,7 @@ export function CartSheet() {
   const [editingNotes, setEditingNotes] = useState<{ [key: string]: boolean }>({});
   const [tempNotes, setTempNotes] = useState<{ [key: string]: string }>({});
   const [localOrderNotes, setLocalOrderNotes] = useState(orderNotes);
+  const [showQRScanner, setShowQRScanner] = useState(false);
   const debouncedOrderNotes = useDebounce(localOrderNotes, 300);
 
   useEffect(() => {
@@ -76,6 +82,21 @@ export function CartSheet() {
 
   const handleCancelEditNotes = (itemId: string) => {
     setEditingNotes({ ...editingNotes, [itemId]: false });
+  };
+
+  const handleTableScanned = (scannedTableNumber: string) => {
+    setTableNumber(scannedTableNumber);
+    setShowQRScanner(false);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (!tableNumber) {
+      setShowQRScanner(true);
+    } else {
+      // Proceed to checkout with existing table number
+      // This is where you would navigate to checkout page or trigger checkout process
+      console.log('Proceeding to checkout with table:', tableNumber);
+    }
   };
 
   if (items.length === 0) {
@@ -300,6 +321,30 @@ export function CartSheet() {
 
             <Separator className="restaurant-border" />
 
+            {/* Table Number Display */}
+            {tableNumber && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 restaurant-bg-primary/10 rounded-lg restaurant-border">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4 restaurant-text-primary" />
+                    <span className="restaurant-text-foreground restaurant-font-heading text-sm font-semibold">
+                      Table {tableNumber}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowQRScanner(true)}
+                    className="text-xs restaurant-text-primary hover:restaurant-bg-primary/10"
+                  >
+                    <QrCode className="h-3 w-3 mr-1" />
+                    Change
+                  </Button>
+                </div>
+                <Separator className="restaurant-border" />
+              </div>
+            )}
+
             {/* Order Summary */}
             <div className="space-y-2 restaurant-font-body text-sm">
               <div className="flex justify-between restaurant-text-foreground restaurant-font-heading text-base font-bold">
@@ -313,10 +358,18 @@ export function CartSheet() {
         {/* Action Buttons */}
         <div className="space-y-3 pt-4 px-4">
           <Button
+            onClick={handleProceedToCheckout}
             className="w-full restaurant-bg-primary hover:restaurant-bg-primary/90 text-white restaurant-font-heading font-semibold py-3"
             size="lg"
           >
-            Proceed to Checkout - ₺{totalPrice.toFixed(2)}
+            {tableNumber ? (
+              `Confirm Order - ₺${totalPrice.toFixed(2)}`
+            ) : (
+              <>
+                <QrCode className="h-4 w-4 mr-2" />
+                Proceed to Checkout - ₺{totalPrice.toFixed(2)}
+              </>
+            )}
           </Button>
 
           <div className="flex space-x-3">
@@ -339,6 +392,13 @@ export function CartSheet() {
             </Button>
           </div>
         </div>
+
+        {/* QR Scanner */}
+        <QRScanner
+          isOpen={showQRScanner}
+          onClose={() => setShowQRScanner(false)}
+          onTableScanned={handleTableScanned}
+        />
       </SheetContent>
     </Sheet>
   );
