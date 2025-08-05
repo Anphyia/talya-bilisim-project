@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Instagram, Globe } from 'lucide-react';
+import { Phone, Globe } from 'lucide-react';
 import { useThemeStore } from '@/lib/stores/themeStore';
 import { Button } from '@/components/ui/button';
 import { CartIcon } from '@/components/cart/CartIcon';
@@ -22,7 +22,7 @@ export function HeaderActions({ position }: HeaderActionsProps) {
   if (socialLinks.instagram) {
     socialIcons.push(
       <Button
-        key="instagram"
+        key="phone"
         variant="ghost"
         size={buttonSize}
         asChild
@@ -30,11 +30,9 @@ export function HeaderActions({ position }: HeaderActionsProps) {
       >
         <Link
           href={socialLinks.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Follow us on Instagram"
+          aria-label="Call us"
         >
-          <Instagram size={iconSize} />
+          <Phone size={iconSize} />
         </Link>
       </Button>
     );

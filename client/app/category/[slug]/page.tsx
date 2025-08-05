@@ -6,7 +6,8 @@ import { SubcategoryNavigation } from '@/components/layout/Navigation/Subcategor
 import { CategoryPageClient } from '@/components/category/CategoryPageClient';
 import { SubcategoryPageSkeleton } from '@/components/ui/SubcategorySkeleton';
 import { createCategoryDataFromBasketMenu } from '@/lib/data/dataMapper';
-import { basketMenuService, menuItemsService } from '@/lib/services';
+import { basketMenuService, menuItemsService, restaurantService } from '@/lib/services';
+import { RestaurantDataProvider } from '@/components/providers/RestaurantDataProvider';
 import { notFound } from 'next/navigation';
 
 interface CategoryPageProps {
@@ -20,9 +21,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   try {
     const resolvedParams = await params;
 
-    const [basketCategoryResponse, menuItemsResponse] = await Promise.all([
+    const [basketCategoryResponse, menuItemsResponse, restaurantResponse] = await Promise.all([
       basketMenuService.getBasketMenuCategoryBySlug(resolvedParams.slug),
-      menuItemsService.getProcessedMenuItems()
+      menuItemsService.getProcessedMenuItems(),
+      restaurantService.getRestaurantInfo()
     ]);
 
     if (!basketCategoryResponse.success || !basketCategoryResponse.data) {
@@ -48,37 +50,43 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       name: sub.name
     }));
 
+    const restaurantData = restaurantResponse.success ? restaurantResponse.data : null;
+
     return (
       <ErrorBoundary>
-        <div className="min-h-screen restaurant-bg-background">
-          <Header />
+        <RestaurantDataProvider restaurantData={restaurantData}>
+          <div className="min-h-screen restaurant-bg-background">
+            <Header />
 
-          <CategoryBreadcrumb
-            categoryName={categoryData.name}
-          />
+            <CategoryBreadcrumb
+              categoryName={categoryData.name}
+            />
 
-          <SubcategoryNavigation subcategories={subcategoriesForNav} />
+            <SubcategoryNavigation subcategories={subcategoriesForNav} />
 
-          <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-            <CategoryPageClient categoryData={categoryData} />
-          </main>
-        </div>
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+              <CategoryPageClient categoryData={categoryData} />
+            </main>
+          </div>
+        </RestaurantDataProvider>
       </ErrorBoundary>
     );
   } catch (error) {
     console.error('Error loading category data:', error);
     return (
       <ErrorBoundary>
-        <div className="min-h-screen restaurant-bg-background">
-          <Header />
-          <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-            <ErrorMessage
-              title="Failed to Load Category"
-              message="We couldn't load this category. Please try again."
-              className="py-12"
-            />
-          </main>
-        </div>
+        <RestaurantDataProvider restaurantData={null}>
+          <div className="min-h-screen restaurant-bg-background">
+            <Header />
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+              <ErrorMessage
+                title="Failed to Load Category"
+                message="We couldn't load this category. Please try again."
+                className="py-12"
+              />
+            </main>
+          </div>
+        </RestaurantDataProvider>
       </ErrorBoundary>
     );
   }
@@ -88,10 +96,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 export function Loading() {
   return (
     <ErrorBoundary>
-      <div className="min-h-screen restaurant-bg-background">
-        <Header />
-        <SubcategoryPageSkeleton sectionCount={4} />
-      </div>
+      <RestaurantDataProvider restaurantData={null}>
+        <div className="min-h-screen restaurant-bg-background">
+          <Header />
+          <SubcategoryPageSkeleton sectionCount={4} />
+        </div>
+      </RestaurantDataProvider>
     </ErrorBoundary>
   );
 }

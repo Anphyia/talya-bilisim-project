@@ -58,7 +58,7 @@ export const mapBasketMenuToCategoryNav = (basketCategory: BasketMenuCategory) =
   return {
     id: basketCategory.id.toString(),
     name: basketCategory.name,
-    image: basketCategory.photoUrl || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&h=400&fit=crop',
+    image: basketCategory.photoUrl || 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&h=400&fit=crop',
     href: `/category/${basketCategory.slug}`,
     description: `Explore our ${basketCategory.name.toLowerCase()} selection`,
   };

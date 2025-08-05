@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface LogoProps {
   name: string;
@@ -8,7 +11,11 @@ interface LogoProps {
 }
 
 export function Logo({ name, logo, className = '' }: LogoProps) {
-  const content = logo ? (
+  const [imageError, setImageError] = useState(false);
+  
+  const shouldShowImage = logo && !imageError && logo !== '/vercel.svg';
+  
+  const content = shouldShowImage ? (
     <div className={`flex items-center space-x-2 ${className}`}>
       <Image
         src={logo}
@@ -17,6 +24,7 @@ export function Logo({ name, logo, className = '' }: LogoProps) {
         height={40}
         className="object-contain"
         priority
+        onError={() => setImageError(true)}
       />
       <span className="text-white restaurant-font-heading font-bold text-lg md:text-xl">
         {name}

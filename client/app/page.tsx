@@ -2,24 +2,31 @@ import { Header } from '@/components/layout/Header';
 import { CategoryCard } from '@/components/layout/Navigation/CategoryCard';
 import { ErrorMessage } from '@/components/error/ErrorMessage';
 import { ErrorBoundary } from '@/components/error/ErrorBoundary';
-import { basketMenuService } from '@/lib/services';
+import { basketMenuService, restaurantService } from '@/lib/services';
 import { mapBasketMenuToCategoryNav } from '@/lib/data/dataMapper';
+import { RestaurantDataProvider } from '@/components/providers/RestaurantDataProvider';
 
 export default async function Home() {
   try {
-    const response = await basketMenuService.getBasketMenuCategories();
+    // Fetch both menu categories and restaurant data
+    const [menuResponse, restaurantResponse] = await Promise.all([
+      basketMenuService.getBasketMenuCategories(),
+      restaurantService.getRestaurantInfo(),
+    ]);
     
-    if (!response.success || !response.data) {
-      throw new Error(response.error?.message || 'Failed to load menu categories');
+    if (!menuResponse.success || !menuResponse.data) {
+      throw new Error(menuResponse.error?.message || 'Failed to load menu categories');
     }
 
-    const menuCategories = response.data.map(mapBasketMenuToCategoryNav);
+    const menuCategories = menuResponse.data.map(mapBasketMenuToCategoryNav);
+    const restaurantData = restaurantResponse.success ? restaurantResponse.data : null;
 
     return (
       <ErrorBoundary>
-        <div className="min-h-screen restaurant-bg-background">
-          {/* Header */}
-          <Header />
+        <RestaurantDataProvider restaurantData={restaurantData}>
+          <div className="min-h-screen restaurant-bg-background">
+            {/* Header */}
+            <Header />
 
           {/* Main Content */}
           <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
@@ -54,24 +61,27 @@ export default async function Home() {
                 Browse our categories above to explore our full menu and start building your perfect meal.
               </p>
             </div>
-          </main>
-        </div>
+            </main>
+          </div>
+        </RestaurantDataProvider>
       </ErrorBoundary>
     );
   } catch (error) {
     console.error('Error loading menu categories:', error);
     return (
       <ErrorBoundary>
-        <div className="min-h-screen restaurant-bg-background">
-          <Header />
-          <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-            <ErrorMessage
-              title="Failed to Load Menu"
-              message="We couldn't load the menu categories. Please check your connection and try again."
-              className="py-12"
-            />
-          </main>
-        </div>
+        <RestaurantDataProvider restaurantData={null}>
+          <div className="min-h-screen restaurant-bg-background">
+            <Header />
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+              <ErrorMessage
+                title="Failed to Load Menu"
+                message="We couldn't load the menu categories. Please check your connection and try again."
+                className="py-12"
+              />
+            </main>
+          </div>
+        </RestaurantDataProvider>
       </ErrorBoundary>
     );
   }

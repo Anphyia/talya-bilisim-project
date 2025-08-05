@@ -9,15 +9,7 @@ interface HeaderProps {
 }
 
 export function Header({ className = '' }: HeaderProps) {
-  const { currentTheme, branding } = useThemeStore();
-  const layout = currentTheme.layout ?? {};
-  const { logoPosition = 'left' } = layout;
-
-  const logoPositionClasses = {
-    left: 'justify-start',
-    center: 'justify-center',
-    right: 'justify-end',
-  };
+  const { branding } = useThemeStore();
 
   return (
     <header
@@ -31,21 +23,26 @@ export function Header({ className = '' }: HeaderProps) {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Mobile Layout */}
+          <div className="flex sm:hidden items-center flex-1">
+            <Logo
+              name={branding.name}
+              logo={branding.logo}
+              className="h-8"
+            />
+          </div>
+          <div className="flex sm:hidden">
+            <HeaderActions position="mobile" />
+          </div>
+
+          {/* Desktop Layout */}
           {/* Left side - Empty space for layout balance */}
-          <div className={`
-            flex items-center space-x-4
-            ${logoPosition === 'center' ? 'hidden sm:flex' : 'flex'}
-            ${logoPosition === 'left' ? 'order-2' : ''}
-          `}>
+          <div className="hidden sm:flex flex-1">
             {/* Keep empty for logo positioning */}
           </div>
 
           {/* Center - Logo */}
-          <div className={`
-            flex items-center
-            ${logoPositionClasses[logoPosition]}
-            ${logoPosition === 'center' ? 'flex-1' : ''}
-          `}>
+          <div className="hidden sm:flex items-center justify-center flex-1">
             <Logo
               name={branding.name}
               logo={branding.logo}
@@ -54,20 +51,9 @@ export function Header({ className = '' }: HeaderProps) {
           </div>
 
           {/* Right side - Social icons */}
-          <div className={`
-            flex items-center space-x-4
-            ${logoPosition === 'center' ? 'hidden sm:flex' : 'flex'}
-            ${logoPosition === 'right' ? 'order-1' : ''}
-          `}>
-            {logoPosition !== 'right' && <HeaderActions position="right" />}
+          <div className="hidden sm:flex items-center space-x-4 flex-1 justify-end">
+            <HeaderActions position="right" />
           </div>
-
-          {/* Mobile menu for centered logo */}
-          {logoPosition === 'center' && (
-            <div className="flex sm:hidden">
-              <HeaderActions position="mobile" />
-            </div>
-          )}
         </div>
       </div>
     </header>
