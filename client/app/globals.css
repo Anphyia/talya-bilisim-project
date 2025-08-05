@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(95.08% 0.0481 184.07);
+  --secondary-background: oklch(100% 0 0);
+  --foreground: oklch(0% 0 0);
+  --main-foreground: oklch(0% 0 0);
+  --main: oklch(78.57% 0.1422 180.36);
+  --border: oklch(0% 0 0);
+  --ring: oklch(0% 0 0);
+  --overlay: oklch(0% 0 0 / 0.8);
+  --shadow: -2px 4px 0px 0px var(--border);
+  --chart-1: #00D6BD;
+  --chart-2: #0099FF;
+  --chart-3: #7A83FF;
+  --chart-4: #FF4D50;
+  --chart-5: #FACC00;
+  --chart-active-dot: #000;
+
+   --restaurant-primary: var(--main);
+  --restaurant-secondary: var(--secondary-background);
+  --restaurant-background: var(--background);
+  --restaurant-foreground: var(--foreground);
+  --restaurant-border: var(--border);
+  --restaurant-accent: var(--main);
+  --restaurant-muted: oklch(60% 0.02 180);
+}
+
+.dark {
+  --background: oklch(22.65% 0.0236 198.49);
+  --secondary-background: oklch(23.93% 0 0);
+  --foreground: oklch(92.49% 0 0);
+  --main-foreground: oklch(0% 0 0);
+  --main: oklch(71.47% 0.129261 180.4742);
+  --border: oklch(0% 0 0);
+  --ring: oklch(100% 0 0);
+  --shadow: -2px 4px 0px 0px var(--border);
+  --chart-1: #00BDA7;
+  --chart-2: #008AE5;
+  --chart-3: #7A83FF;
+  --chart-4: #FF6669;
+  --chart-5: #E0B700;
+  --chart-active-dot: #fff;
+
+    --restaurant-primary: var(--main);
+  --restaurant-secondary: var(--secondary-background);
+  --restaurant-background: var(--background);
+  --restaurant-foreground: var(--foreground);
+  --restaurant-border: var(--border);
+  --restaurant-accent: var(--main);
+  --restaurant-muted: oklch(40% 0.02 180);
+}
+
+@theme inline {
+  --color-main: var(--main);
+  --color-background: var(--background);
+  --color-secondary-background: var(--secondary-background);
+  --color-foreground: var(--foreground);
+  --color-main-foreground: var(--main-foreground);
+  --color-border: var(--border);
+  --color-overlay: var(--overlay);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Shadcn/ui required variables */
+  --color-accent: var(--restaurant-muted);
+  --color-muted: var(--restaurant-muted);
+  --color-muted-foreground: var(--restaurant-foreground);
+
+  --spacing-boxShadowX: -2px;
+  --spacing-boxShadowY: 4px;
+  --spacing-reverseBoxShadowX: --2px;
+  --spacing-reverseBoxShadowY: -4px;
+  --radius-base: 15px;
+  --shadow-shadow: var(--shadow);
+  --font-weight-base: 500;
+  --font-weight-heading: 800;
+}
+  
+@layer base {
+  body {
+    @apply text-foreground font-base bg-background;
+  }
+
+  h1, h2, h3, h4, h5, h6{
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  /* Restaurant Theme Utilities */
+  .restaurant-bg-primary {
+    background-color: var(--restaurant-primary);
+  }
+  
+  .restaurant-bg-secondary {
+    background-color: var(--restaurant-secondary);
+  }
+  
+  .restaurant-bg-accent {
+    background-color: var(--restaurant-accent);
+  }
+  
+  .restaurant-bg-background {
+    background-color: var(--restaurant-background);
+  }
+  .restaurant-bg-foreground {
+    background-color: var(--restaurant-foreground);
+  }
+  
+  .restaurant-text-primary {
+    color: var(--restaurant-primary);
+  }
+  
+  .restaurant-text-secondary {
+    color: var(--restaurant-secondary);
+  }
+  
+  .restaurant-text-accent {
+    color: var(--restaurant-accent);
+  }
+  
+  .restaurant-text-background {
+    color: var(--restaurant-background);
+  }
+  
+  .restaurant-text-foreground {
+    color: var(--restaurant-foreground);
+  }
+  
+  .restaurant-text-muted {
+    color: var(--restaurant-muted);
+  }
+  
+  .restaurant-border-primary {
+    border-color: var(--restaurant-primary);
+  }
+  
+  .restaurant-border {
+    border-color: var(--restaurant-border);
+  }
+  
+  .restaurant-rounded-sm {
+    border-radius: var(--restaurant-radius-sm);
+  }
+  
+  .restaurant-rounded-md {
+    border-radius: var(--restaurant-radius-md);
+  }
+  
+  .restaurant-rounded-lg {
+    border-radius: var(--restaurant-radius-lg);
+  }
+  
+  .restaurant-rounded-xl {
+    border-radius: var(--restaurant-radius-xl);
+  }
+  
+  .restaurant-font-heading {
+    font-family: var(--restaurant-font-heading);
+  }
+  
+  .restaurant-font-body {
+    font-family: var(--restaurant-font-body);
+  }
+  
+  .restaurant-container-spacing {
+    padding: var(--restaurant-container-spacing);
+  }
+  
+  .restaurant-section-spacing {
+    margin: var(--restaurant-section-spacing) 0;
+  }
+  
+  .restaurant-element-spacing {
+    margin: var(--restaurant-element-spacing);
+  }
+  
+  /* Mobile-first grid utilities */
+  .restaurant-grid-categories {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 768px) {
+    .restaurant-grid-categories {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .restaurant-grid-categories {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .restaurant-grid-menu-items {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 768px) {
+    .restaurant-grid-menu-items {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .restaurant-grid-menu-items {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
