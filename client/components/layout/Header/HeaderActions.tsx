@@ -32,7 +32,7 @@ export function HeaderActions({ position }: HeaderActionsProps) {
           href={socialLinks.telephone}
           aria-label="Call us"
         >
-          <Phone size={iconSize} />
+          <Phone size={iconSize} className="restaurant-text-background" />
         </Link>
       </Button>
     );
