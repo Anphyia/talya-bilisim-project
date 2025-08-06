@@ -117,7 +117,7 @@ export function FoodCard({ food, onClick, className = '' }: FoodCardProps) {
 
             <div className="flex justify-between items-center mt-auto">
               <span className="restaurant-text-primary restaurant-font-heading text-base font-bold">
-                ${food.price.toFixed(2)}
+                ₺{food.price.toFixed(2)}
               </span>
               <Button
                 onClick={(e) => {
