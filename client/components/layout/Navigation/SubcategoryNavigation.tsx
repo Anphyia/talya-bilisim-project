@@ -165,7 +165,7 @@ export function SubcategoryNavigation({ subcategories, className = '' }: Subcate
                                 className={`
                                     flex-shrink-0 transition-all duration-200 restaurant-font-body whitespace-nowrap
                                     ${activeSubcategory === subcategory.id
-                                        ? 'restaurant-bg-primary restaurant-text-primary-foreground shadow-sm scale-[1.05]'
+                                        ? 'restaurant-bg-primary restaurant-text-background shadow-sm scale-[1.05]'
                                         : 'restaurant-bg-background restaurant-text-foreground hover:restaurant-bg-muted'
                                     }
                                     focus:ring-2 focus:ring-offset-2 focus:restaurant-ring-primary
