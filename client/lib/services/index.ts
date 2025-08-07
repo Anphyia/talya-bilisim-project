@@ -7,6 +7,7 @@ export { menuGroupsService, MenuGroupsService } from './menu-groups.service';
 export { menuItemsService, MenuItemsService } from './menu-items.service';
 export { tablesService, TablesService } from './tables.service';
 export { basketMenuService, BasketMenuService } from './basket-menu.service';
+export { allergenService, AllergenService } from './allergen.service';
 
 // Import services for utility functions
 import { apiService } from './api.service';

@@ -1,6 +1,7 @@
 import { MenuItem } from '@/types/api-response-types';
 import { ProcessedMenuItem, ServiceResponse } from '../../types/service-types';
 import { apiService } from './api.service';
+import { allergenService } from './allergen.service';
 
 class MenuItemsService {
     /**
@@ -43,18 +44,21 @@ class MenuItemsService {
 
         const menuItems = response.data;
 
-        // Process menu items
-        const processedItems: ProcessedMenuItem[] = menuItems
-            .map(item => {
-                // Parse allergens
-                let allergens: string[] = [];
+        // Process menu items with allergen conversion
+        const processedItems: ProcessedMenuItem[] = await Promise.all(
+            menuItems.map(async item => {
+                // Parse allergen IDs
+                let allergenIds: string[] = [];
                 if (item.ALLERGENS) {
                     try {
-                        allergens = item.ALLERGENS.split(',').map(a => a.trim()).filter(Boolean);
+                        allergenIds = item.ALLERGENS.split(',').map(a => a.trim()).filter(Boolean);
                     } catch {
-                        allergens = [item.ALLERGENS];
+                        allergenIds = [item.ALLERGENS];
                     }
                 }
+
+                // Convert allergen IDs to names
+                const allergens = await allergenService.convertAllergenIdsToNames(allergenIds);
 
                 return {
                     id: item.ID,
@@ -74,7 +78,10 @@ class MenuItemsService {
                     displayOrder: item.DISPLAYORDER,
                 };
             })
-            .sort((a, b) => a.displayOrder - b.displayOrder);
+        );
+
+        // Sort processed items
+        processedItems.sort((a, b) => a.displayOrder - b.displayOrder);
 
         return {
             data: processedItems,

@@ -5,6 +5,7 @@ import {
   BasketMenuCategory
 } from '@/types/service-types';
 import { Food, Subcategory, CategoryData } from '../../types/food-types';
+import { allergenService } from '@/lib/services/allergen.service';
 
 /**
  * Map API menu item to Food interface
@@ -17,6 +18,26 @@ export const mapMenuItemToFood = (item: ProcessedMenuItem): Food => {
     image: item.photoUrl || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&h=400&fit=crop',
     description: item.description || '',
     allergens: item.allergens,
+    category: item.groupName.toLowerCase().replace(/\s+/g, '-'),
+    subcategory: item.groupId.toString(),
+    isNew: false,
+  };
+};
+
+/**
+ * Map API menu item to Food interface with allergen name conversion
+ */
+export const mapMenuItemToFoodWithAllergens = async (item: ProcessedMenuItem): Promise<Food> => {
+  // Convert allergen IDs to names
+  const allergenNames = await allergenService.convertAllergenIdsToNames(item.allergens);
+  
+  return {
+    id: item.id.toString(),
+    name: item.name,
+    price: item.price,
+    image: item.photoUrl || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&h=400&fit=crop',
+    description: item.description || '',
+    allergens: allergenNames,
     category: item.groupName.toLowerCase().replace(/\s+/g, '-'),
     subcategory: item.groupId.toString(),
     isNew: false,
@@ -67,10 +88,10 @@ export const mapBasketMenuToCategoryNav = (basketCategory: BasketMenuCategory) =
 /**
  * Group menu items by their group and create CategoryData structure
  */
-export const createCategoryDataFromAPI = (
+export const createCategoryDataFromAPI = async (
   menuGroups: ProcessedMenuGroup[],
   menuItems: ProcessedMenuItem[]
-): Record<string, CategoryData> => {
+): Promise<Record<string, CategoryData>> => {
   const categoryData: Record<string, CategoryData> = {};
 
   // Create a map of group ID to group info
