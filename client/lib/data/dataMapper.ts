@@ -4,7 +4,7 @@ import {
   ProcessedRestaurant,
   BasketMenuCategory
 } from '@/types/service-types';
-import { Food, Subcategory, CategoryData } from './mockData';
+import { Food, Subcategory, CategoryData } from '../../types/food-types';
 
 /**
  * Map API menu item to Food interface

@@ -2,7 +2,7 @@
 
 import { FoodDetailModal } from '@/components/food/FoodDetailModal';
 import { CategorySection } from '@/components/category/CategorySection';
-import { Food, CategoryData } from '@/lib/data/mockData';
+import { Food, CategoryData } from '@/types/food-types';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';

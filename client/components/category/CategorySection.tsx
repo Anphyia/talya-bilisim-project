@@ -2,7 +2,7 @@
 
 import { FoodCard } from '@/components/food/FoodCard';
 import { Separator } from '@/components/ui/separator';
-import { Food } from '@/lib/data/mockData';
+import { Food } from '@/types/food-types';
 
 interface CategorySectionProps {
   subcategory: {
