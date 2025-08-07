@@ -16,7 +16,6 @@ interface CategoryPageProps {
   }>;
 }
 
-// This is now a Server Component that fetches data on the server
 export default async function CategoryPage({ params }: CategoryPageProps) {
   try {
     const resolvedParams = await params;

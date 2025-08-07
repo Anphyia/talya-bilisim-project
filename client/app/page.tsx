@@ -8,7 +8,6 @@ import { RestaurantDataProvider } from '@/components/providers/RestaurantDataPro
 
 export default async function Home() {
   try {
-    // Fetch both menu categories and restaurant data
     const [menuResponse, restaurantResponse] = await Promise.all([
       basketMenuService.getBasketMenuCategories(),
       restaurantService.getRestaurantInfo(),
