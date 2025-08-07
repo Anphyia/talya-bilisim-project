@@ -26,6 +26,8 @@ interface CartState {
   orderNotes: string;
   tableNumber: string | null;
   isCartOpen: boolean;
+  lastUpdated: number;
+  expiresAt: number;
 
   // Cart actions
   addItem: (food: Food, quantity: number, notes?: string) => void;
@@ -35,6 +37,7 @@ interface CartState {
   updateOrderNotes: (notes: string) => void;
   setTableNumber: (tableNumber: string) => void;
   clearCart: () => void;
+  checkExpiration: () => void;
 
   // UI state management
   toggleCart: () => void;
@@ -52,6 +55,17 @@ const generateCartItemId = (food: Food, notes: string): string => {
   return `${food.id}-${notesHash}`;
 };
 
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+
+// Helper function to update timestamps
+const updateTimestamps = () => {
+  const now = Date.now();
+  return {
+    lastUpdated: now,
+    expiresAt: now + CACHE_DURATION,
+  };
+};
+
 // Computed selectors (not persisted)
 interface CartSelectors {
   getTotalItems: () => number;
@@ -66,9 +80,30 @@ export const useCartStore = create<CartState & CartSelectors>()(
       orderNotes: '',
       tableNumber: null,
       isCartOpen: false,
+      lastUpdated: Date.now(),
+      expiresAt: Date.now() + CACHE_DURATION,
+
+      checkExpiration: () => {
+        const now = Date.now();
+        const { expiresAt, items } = get();
+
+        if (now > expiresAt && items.length > 0) {
+          toast.info('Your cart has expired and been cleared', { position: "bottom-center" });
+          set({
+            items: [],
+            orderNotes: '',
+            tableNumber: null,
+            isCartOpen: false,
+            ...updateTimestamps(),
+          });
+        }
+      },
 
       // Cart Actions
       addItem: (food, quantity, notes = '') => {
+        // Check expiration before adding
+        get().checkExpiration();
+
         const itemId = generateCartItemId(food, notes);
         const existingItem = get().items.find(item => item.id === itemId);
 
@@ -82,6 +117,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
                   ? { ...item, quantity: item.quantity + quantity }
                   : item
               ),
+              ...updateTimestamps(),
             };
           } else {
             // Add new item
@@ -95,6 +131,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
             toast.success(`${food.name} (x${quantity}) added to cart!`, { position: "top-center" });
             return {
               items: [...state.items, newItem],
+              ...updateTimestamps(),
             };
           }
         });
@@ -103,6 +140,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
       removeItem: (itemId) => {
         set((state) => ({
           items: state.items.filter(item => item.id !== itemId),
+          ...updateTimestamps(),
         }));
       },
 
@@ -118,6 +156,7 @@ export const useCartStore = create<CartState & CartSelectors>()(
               ? { ...item, quantity: Math.min(quantity, 10) } // Max 10 items
               : item
           ),
+          ...updateTimestamps(),
         }));
       },
 
@@ -128,15 +167,22 @@ export const useCartStore = create<CartState & CartSelectors>()(
               ? { ...item, productNotes: notes.trim() }
               : item
           ),
+          ...updateTimestamps(),
         }));
       },
 
       updateOrderNotes: (notes) => {
-        set({ orderNotes: notes.trim() });
+        set({
+          orderNotes: notes.trim(),
+          ...updateTimestamps(),
+        });
       },
 
       setTableNumber: (tableNumber) => {
-        set({ tableNumber });
+        set({
+          tableNumber,
+          ...updateTimestamps(),
+        });
         toast.success(`Table ${tableNumber} selected!`, { position: "top-center" });
       },
 
@@ -145,15 +191,18 @@ export const useCartStore = create<CartState & CartSelectors>()(
           items: [],
           orderNotes: '',
           tableNumber: null,
+          ...updateTimestamps(),
         });
       },
 
       // UI State Management
       toggleCart: () => {
+        get().checkExpiration();
         set((state) => ({ isCartOpen: !state.isCartOpen }));
       },
 
       openCart: () => {
+        get().checkExpiration();
         set({ isCartOpen: true });
       },
 
@@ -189,7 +238,25 @@ export const useCartStore = create<CartState & CartSelectors>()(
         items: state.items,
         orderNotes: state.orderNotes,
         tableNumber: state.tableNumber,
+        lastUpdated: state.lastUpdated,
+        expiresAt: state.expiresAt,
       }),
+      // Custom hydration to check expiration on app load
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          const now = Date.now();
+          if (now > state.expiresAt && state.items.length > 0) {
+            // Clear expired cart data
+            state.items = [];
+            state.orderNotes = '';
+            state.tableNumber = null;
+            state.isCartOpen = false;
+            const timestamps = updateTimestamps();
+            state.lastUpdated = timestamps.lastUpdated;
+            state.expiresAt = timestamps.expiresAt;
+          }
+        }
+      },
     }
   )
 );
